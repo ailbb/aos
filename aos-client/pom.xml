@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ailbb</groupId>
+    <artifactId>aos-client</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <encoding>UTF-8</encoding>
+
+        <java.version>1.8</java.version>  <!-- Don't specify the version-->
+
+        <version.osgi>6.0.0</version.osgi>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <version>4.2.0</version>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+<!--                        其中Private-Package是指HelloImpl类所在包不被export出去，-->
+<!--                        其他bundle不能import到这个包下面的类。配置好后，使用mvn clean install命令打包。-->
+                        <Private-Package>com.ailbb.aos.client</Private-Package>
+                        <Import-Package>com.ailbb.aos.api</Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+<!--    在dependencies中有服务接口的依赖，因为HelloClient组件中依赖了这个接口Hello类。-->
+    <dependencies>
+        <dependency>
+            <groupId>com.ailbb</groupId>
+            <artifactId>aos-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.core -->
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>${version.osgi}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
